@@ -1,67 +1,70 @@
-var vocales = ['a', 'e', 'i', 'o', 'u'];
-var valores = ['ai', 'enter', 'ines', 'ober', 'ufat'];
+// Variables globales para vocales y valores
+const vocales = ['a', 'e', 'i', 'o', 'u'];
+const valores = ['ai', 'enter', 'ines', 'ober', 'ufat'];
 
+// Función para obtener el valor del textarea
+function obtenerTexto() {
+    return document.getElementById('textArea').value;
+}
+
+// Función para mostrar el resultado en el elemento HTML
+function mostrarResultado(resultado) {
+    document.getElementById('cifradoTexto').innerHTML = resultado;
+}
+
+// Función para encriptar el texto
 function encriptar() {
-    let palabra = document.getElementById('textArea').value;
     let resultado = '';
-
-    // Recorrer cada letra de la palabra
+    let palabra = obtenerTexto();
+    validarMayuscula(palabra);
     for (let i = 0; i < palabra.length; i++) {
-        let char = palabra[i].toLowerCase(); // Convertir a minúsculas
+        let char = palabra[i];
         let encontrada = false;
 
-        // Comparar con cada vocal
         for (let j = 0; j < vocales.length; j++) {
             if (char === vocales[j]) {
-                resultado += valores[j]; // Encriptar la vocal
+                resultado += valores[j];
                 encontrada = true;
                 break;
             }
         }
 
-        // Si no es vocal, se agrega tal cual
         if (!encontrada) {
             resultado += char;
         }
     }
 
-    // Mostrar el resultado en el elemento HTML
-    document.getElementById('cifradoTexto').innerText = resultado;
+    mostrarResultado(resultado);
 }
 
+// Función para desencriptar el texto
 function desencriptar() {
-    let texto = document.getElementById('textArea').value;
     let resultado = '';
+    let palabra = obtenerTexto();
 
-    for (let i = 0; i < texto.length; i++) {
-        let char = texto[i].toLowerCase();
+    for (let i = 0; i < palabra.length; i++) {
+        let char = palabra[i].toLowerCase();
         let encontrada = false;
 
-        // Verificar si la cadena encriptada comienza con alguno de los valores
         for (let j = 0; j < valores.length; j++) {
-            if (texto.startsWith(valores[j], i)) {
-                resultado += vocales[j]; // Desencriptar
-                i += valores[j].length - 1; // Avanzar el índice
+            if (palabra.startsWith(valores[j], i)) {
+                resultado += vocales[j];
+                i += valores[j].length - 1;
                 encontrada = true;
                 break;
             }
         }
 
-        // Si no se encontró una secuencia encriptada, agregar el carácter tal cual
         if (!encontrada) {
             resultado += char;
         }
     }
 
-    // Mostrar el resultado en el elemento HTML
-    document.getElementById('cifradoTexto').innerText = resultado;
+    mostrarResultado(resultado);
 }
 
-
 function copiarTexto() {
-    let textoCopiado = document.getElementById('cifradoTexto').innerHTML; 
-    console.log(textoCopiado);
-
+    let textoCopiado = document.getElementById('cifradoTexto').innerHTML;
     const copiarContenido = async () => {
         try {
             await navigator.clipboard.writeText(textoCopiado);
@@ -70,6 +73,16 @@ function copiarTexto() {
             console.error('Error al copiar: ', err);
         }
     }
+    copiarContenido();
+}
 
-    copiarContenido(); // Llama a la función para copiar el texto
+
+function validarMayuscula(texto) {
+    let letras  = obtenerTexto();
+    for (let i = 0; i < texto.length; i++) {
+        if (letras .indexOf(texto.charAt(i), 0) != -1) {
+            return alert("Tiene mayuscula");
+        }
+    }
+    return alert("No tiene mayuscula");
 }
