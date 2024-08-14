@@ -3,23 +3,23 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Challenge 01</title>
+    <title>Alura Challenge - Desafío 1</title>
 </head>
 
 <body>
-    <h1>Juego de Encriptación y Desencriptación</h1>
-    <div>
-        <label for="inputWord">Palabra:</label>
-        <input type="text" id="inputWord">
-        <button onclick="encriptar()">Encriptar</button>
-        <button onclick="desencriptar()">Desencriptar</button>
-    </div>
-    <div>
-        <h2>Resultado:</h2>
-        <p id="result"></p>
-    </div>
+    <header></header>
+    <main>
+        <textarea id="textArea" placeholder="Ingrese su texto aquí"></textarea>
+        <button onclick="encriptar()">Cifrar</button>
+        <button onclick="desencriptar()">Descifrar</button>
+        <textarea name="" id="cifradoTexto" readonly></textarea>
+        <button onclick="copiarTexto()">Copiar</button>
+    </main>
+    <footer>
+        <p>Nombre: Juan Ramon Figueroa Vela</p>
+        <p>Fecha: 13/08/24</p>
+    </footer>
 
     <script src="app.js"></script>
 </body>

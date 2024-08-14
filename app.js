@@ -1,39 +1,75 @@
 var vocales = ['a', 'e', 'i', 'o', 'u'];
-var valores = ['asienda', 'enter', 'iguana', 'onduras', 'uruguay'];
+var valores = ['ai', 'enter', 'ines', 'ober', 'ufat'];
 
 function encriptar() {
-    let palabra = document.getElementById('inputWord').value;
+    let palabra = document.getElementById('textArea').value;
     let resultado = '';
+
+    // Recorrer cada letra de la palabra
     for (let i = 0; i < palabra.length; i++) {
-        let char = palabra[i].toLowerCase(); // Convertir a minúsculas para comparación
-        let index = vocales.indexOf(char);
-        if (index !== -1) {
-            resultado += valores[index];
-        } else {
+        let char = palabra[i].toLowerCase(); // Convertir a minúsculas
+        let encontrada = false;
+
+        // Comparar con cada vocal
+        for (let j = 0; j < vocales.length; j++) {
+            if (char === vocales[j]) {
+                resultado += valores[j]; // Encriptar la vocal
+                encontrada = true;
+                break;
+            }
+        }
+
+        // Si no es vocal, se agrega tal cual
+        if (!encontrada) {
             resultado += char;
         }
     }
-    document.getElementById('result').innerText = resultado;
+
+    // Mostrar el resultado en el elemento HTML
+    document.getElementById('cifradoTexto').innerText = resultado;
 }
 
 function desencriptar() {
-    let texto = document.getElementById('inputWord').value;
+    let texto = document.getElementById('textArea').value;
     let resultado = '';
-    let temp = ''; // Variable para almacenar caracteres temporales
+
     for (let i = 0; i < texto.length; i++) {
-        temp += texto[i];
-        if (valores.includes(temp)) {
-            let index = valores.indexOf(temp);
-            resultado += vocales[index];
-            temp = ''; // Limpiar el buffer temporal
-        } else if (texto[i] !== ' ' && !valores.some(val => val.startsWith(temp))) {
-            resultado += temp;
-            temp = ''; // Limpiar el buffer temporal
+        let char = texto[i].toLowerCase();
+        let encontrada = false;
+
+        // Verificar si la cadena encriptada comienza con alguno de los valores
+        for (let j = 0; j < valores.length; j++) {
+            if (texto.startsWith(valores[j], i)) {
+                resultado += vocales[j]; // Desencriptar
+                i += valores[j].length - 1; // Avanzar el índice
+                encontrada = true;
+                break;
+            }
+        }
+
+        // Si no se encontró una secuencia encriptada, agregar el carácter tal cual
+        if (!encontrada) {
+            resultado += char;
         }
     }
-    // Agregar cualquier carácter restante en temp al resultado
-    if (temp) {
-        resultado += temp;
+
+    // Mostrar el resultado en el elemento HTML
+    document.getElementById('cifradoTexto').innerText = resultado;
+}
+
+
+function copiarTexto() {
+    let textoCopiado = document.getElementById('cifradoTexto').innerHTML; 
+    console.log(textoCopiado);
+
+    const copiarContenido = async () => {
+        try {
+            await navigator.clipboard.writeText(textoCopiado);
+            console.log('Contenido copiado al portapapeles');
+        } catch (err) {
+            console.error('Error al copiar: ', err);
+        }
     }
-    document.getElementById('result').innerText = resultado;
+
+    copiarContenido(); // Llama a la función para copiar el texto
 }
