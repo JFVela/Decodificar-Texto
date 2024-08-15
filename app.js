@@ -2,6 +2,9 @@
 const vocales = ['a', 'e', 'i', 'o', 'u'];
 const valores = ['ai', 'enter', 'ines', 'ober', 'ufat'];
 
+const letrasMayusculas = new Set("ABCDEFGHYJKLMNÑOPQRSTUVWXYZ");
+const letrasConTilde = new Set("áéíóúÁÉÍÓÚ");
+
 // Función para obtener el valor del textarea
 function obtenerTexto() {
     return document.getElementById('textArea').value;
@@ -12,28 +15,41 @@ function mostrarResultado(resultado) {
     document.getElementById('cifradoTexto').innerHTML = resultado;
 }
 
+// Función para validar mayúsculas y tildes
+function validarTexto(texto) {
+    for (let i = 0; i < texto.length; i++) {
+        if (letrasMayusculas.has(texto[i]) || letrasConTilde.has(texto[i])) {
+            return true;
+        }
+    }
+    return false;
+}
+
 // Función para encriptar el texto
 function encriptar() {
     let resultado = '';
     let palabra = obtenerTexto();
-    validarMayuscula(palabra);
-    for (let i = 0; i < palabra.length; i++) {
-        let char = palabra[i];
-        let encontrada = false;
 
-        for (let j = 0; j < vocales.length; j++) {
-            if (char === vocales[j]) {
-                resultado += valores[j];
-                encontrada = true;
-                break;
+    if (validarTexto(palabra)) {
+        resultado = 'Por favor ingrese datos que no contengan tildes o mayúsculas';
+    } else {
+        for (let i = 0; i < palabra.length; i++) {
+            let char = palabra[i];
+            let encontrada = false;
+
+            for (let j = 0; j < vocales.length; j++) {
+                if (char === vocales[j]) {
+                    resultado += valores[j];
+                    encontrada = true;
+                    break;
+                }
+            }
+
+            if (!encontrada) {
+                resultado += char;
             }
         }
-
-        if (!encontrada) {
-            resultado += char;
-        }
     }
-
     mostrarResultado(resultado);
 }
 
@@ -63,26 +79,11 @@ function desencriptar() {
     mostrarResultado(resultado);
 }
 
+// Función para copiar texto
 function copiarTexto() {
     let textoCopiado = document.getElementById('cifradoTexto').innerHTML;
-    const copiarContenido = async () => {
-        try {
-            await navigator.clipboard.writeText(textoCopiado);
-            console.log('Contenido copiado al portapapeles');
-        } catch (err) {
-            console.error('Error al copiar: ', err);
-        }
-    }
-    copiarContenido();
+    navigator.clipboard.writeText(textoCopiado)
+        .then(() => console.log('Contenido copiado al portapapeles'))
+        .catch(err => console.error('Error al copiar: ', err));
 }
 
-
-function validarMayuscula(texto) {
-    let letras  = obtenerTexto();
-    for (let i = 0; i < texto.length; i++) {
-        if (letras .indexOf(texto.charAt(i), 0) != -1) {
-            return alert("Tiene mayuscula");
-        }
-    }
-    return alert("No tiene mayuscula");
-}
