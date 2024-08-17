@@ -5,23 +5,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Alura Challenge - Desafío 1</title>
 </head>
 
-<body>
-    <header></header>
-    <main>
-        <textarea class="textoIngresado" id="textArea" placeholder="Ingrese su texto aquí"></textarea>
-        <button onclick="encriptar()">Cifrar</button>
-        <button onclick="desencriptar()">Descifrar</button>
-        <button onclick="validarMayuscula()">Validar</button>
-        <textarea name="" id="cifradoTexto" readonly></textarea>
+<body class="cuerpo">
+
+    <main class="contenido">
+
+        <section class="contenido__principal">
+            <img class="logo" src="/assets/Logo.png" alt="Logo Alura">
+            <div class="contenido__principal__grupo">
+                <textarea class="textoIngresado" id="textArea" placeholder="Ingrese su texto aquí"></textarea>
+                <div class="contenido__final">
+                    <div class="contenido__error">
+                        <i class="contenido__error__icono fas fa-exclamation-circle"></i>
+                        <p class="contenido__error__texto">
+                            Solo letras minúsculas y sin acentos
+                        </p>
+                    </div>
+                    <div class="contenido__botones">
+                        <button class="contenido__botones__cifrar" onclick="encriptar()">Encriptar</button>
+                        <button class="contenido__botones__descifrar" onclick="desencriptar()">Desencriptar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contenido__secundario">
+            <div class="contenido__secundario__grupo">
+                <img class="contenido__secundario__grupo__imagen" src="/assets/Muñeco.png"
+                    alt="imagen de un joven con lupa">
+                <div class="contenido__secundario__grupo__texto">
+                    <h2 class="contenido__secundario__grupo__texto__titulo">
+                        Ningún mensaje fue encontrado
+                    </h2>
+                    <p class="contenido__secundario__grupo__texto__parrafo">
+                        Ingresa al texto que desees encriptar o desencriptar
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!--
+        <textarea name="textArea" id="cifradoTexto" readonly></textarea>
         <button onclick="copiarTexto()">Copiar</button>
+        -->
     </main>
-    <footer>
-        <p>Nombre: Juan Ramon Figueroa Vela</p>
-        <p>Fecha: 13/08/24</p>
-    </footer>
 
     <script src="app.js"></script>
 </body>
